@@ -1,0 +1,90 @@
+@startuml
+class ProducHitDao {
+    -driver : IProductHitCache
+    +hit(id : type) : type
+    +__construct(driver : IProductHitCache)
+}
+class ProducHitDao implements IProductHitDao
+class ProductHitCacheCSV {
+    -filename : string = "./counters"
+    +hit(key : string)
+    +__construct(filename : string)
+}
+class ProductHitCacheCSV implements IProductHitCache
+class ProductDao {
+    -cache : IProductCache
+    -dbManager : IProductDatabaseManager
+    +find(id : string) : array
+    +__construct(dbManager : IProductDatabaseManager, cache : IProductCache)
+}
+class ProductDao implements IProductDao
+class ProductHitCacheClever {
+    -path : string = "./"
+    +hit(key : string)
+    +__construct(path : string)
+}
+class ProductHitCacheClever implements IProductHitCache
+class ProductESAdapter {
+    -driver : IElasticSearchDriver
+    +find(id : type) : array
+    +__construct(driver : IMySQLDriver)
+}
+class ProductESAdapter implements IProductDatabaseAdapter
+class ProductCacheFS {
+    -path : string = "./"
+    +find(key : string) : array
+    -getFileName(key : type) : string
+    +set(key : string, val : array)
+    +__construct(path : string)
+}
+class ProductCacheFS implements IProductCache
+class ProductDatabaseManager {
+    -driver : object
+    +find(id : string) : array
+    +__construct(driver : object)
+}
+class ProductDatabaseManager implements IProductDatabaseManager
+interface IMySQLDriver {
+    +findProduct(id : string) : array
+}
+class ProductHitCacheSerialization {
+    -filename : string = "./counters"
+    +hit(key : string)
+    +__construct(filename : string)
+}
+class ProductHitCacheSerialization implements IProductHitCache
+interface IProductHitCache {
+    +hit(key : string)
+}
+interface IElasticSearchDriver {
+    +findById(id : string) : array
+}
+interface IProductDao {
+    +find(id : string) : array
+}
+interface IProductDatabaseAdapter {
+    +find(id : string) : array
+}
+class ProductMySqlAdapter {
+    -driver : IMySQLDriver
+    +find(id : type) : array
+    +__construct(driver : IMySQLDriver)
+}
+class ProductMySqlAdapter implements IProductDatabaseAdapter
+interface IProductDatabaseManager {
+    +find(id : string) : array
+}
+interface IProductHitDao {
+    +hit(id : string)
+}
+interface IProductCache {
+    +find(key : string) : array
+    +set(key : string, val : array)
+}
+class ProductController {
+    -productDao : IProductDao
+    -productHitDao : IProductHitDao
+    +detail(id : string) : string
+    +__construct(productDao : IProductDao, productHitDao : IProductHitDao)
+}
+@enduml

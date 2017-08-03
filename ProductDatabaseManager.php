@@ -1,6 +1,6 @@
 <?php
 
-class ProductDatabaseManager implements IProductDatabase {
+class ProductDatabaseManager implements IProductDatabaseManager {
 
     /**
      * @var object 
