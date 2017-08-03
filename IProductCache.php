@@ -4,14 +4,13 @@ interface IProductCache {
 
     /**
      * @param string $key
-     * @return string
+     * @return array
      */
     public function find($key);
 
     /**
-     * 
      * @param string $key
-     * @param string $val
+     * @param array $val
      */
     public function set($key, $val);
 }

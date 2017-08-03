@@ -29,16 +29,16 @@ class ProductHitCacheCSV implements IProductHitCache {
         $filename = $this->filename;
         $temp = $filename . '.tmp';
         if (!file_exists($filename) && !touch($filename)) { //osetreni existence zdrojoveho souboru
-            throw new \Exception('Nelze vytvorit meta soubor.');
+            throw new \Exception('unable to create meta file');
         }
         if (!($output = fopen($temp, 'a+'))) { //otevreni docasneho souboru
-            throw new \Exception('Nelze otevrit meta soubor.');
+            throw new \Exception('unable to open meta file');
         }
         flock($output, LOCK_EX); //exkluzivni zamek, ostatni procesy musi pro cteni a zapis tohoto souboru cekat na uvolneni 
         fseek($output, 0);
         ftruncate($output, 0);
         if (!($input = fopen($filename, 'r'))) { //otevreni zdrojoveho souboru
-            throw new \Exception('Nelze otevrit meta soubor.');
+            throw new \Exception('unable to open meta file');
         }
         $insert = true;
         while (($data = fgetcsv($input)) !== false) {

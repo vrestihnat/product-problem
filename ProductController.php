@@ -3,22 +3,22 @@
 class ProductController {
 
     /**
-     * @var IElasticSearchDriver 
+     * @var IProductDao
      */
-    private $db;
+    private $productDao;
 
     /**
-     * @var IMyCacheDriver 
+     * @var IProductHitDao 
      */
-    private $cache;
+    private $productHitDao;
 
     /**
-     * @param IElasticSearchDriver $db
-     * @param IMyCacheDriver $cache
+     * @param IProductDao $productDao
+     * @param IProductHitDao $productHitDao
      */
-    public function __construct(IElasticSearchDriver $db, IMyCacheDriver $cache) {
-        $this->db = $db;
-        $this->cache = $cache;
+    public function __construct(IProductDao $productDao, IProductHitDao $productHitDao) {
+	$this->productDao = $productDao;
+	$this->productHitDao = $productHitDao;
     }
 
     /**
@@ -26,13 +26,9 @@ class ProductController {
      * @return string
      */
     public function detail($id) {
-        $prdct = $this->cache->find($id);
-        if (!$prdct) {
-            $prdct = json_encode($this->db->findById($id));
-            $this->cache->set($id, $prdct);
-        }
-        $this->cache->incry($id);
-        return $prdct;
+	$prdct = json_encode($this->productDao->find($id)); // ziska produkt z uloziste
+	$this->productHitDao->hit($id); // zaznamena zobrazeni stranky s detailem produktu
+	return $prdct;
     }
 
 }
