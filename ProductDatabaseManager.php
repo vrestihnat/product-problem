@@ -5,7 +5,7 @@ class ProductDatabaseManager implements IProductDatabase {
     /**
      * @var object 
      */
-    private $driver = '';
+    private $driver;
 
     /**
      * 
