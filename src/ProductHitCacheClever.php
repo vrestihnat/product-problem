@@ -17,11 +17,12 @@ class ProductHitCacheClever implements IProductHitCache {
     }
 
     /**
-     * Prida hit do pole, 
+     * Prida hit do souboru. 
      * kazdy hit prida do souboru def. klicem prave jeden znak o velikost 1B,
      * pocet hitu je tedy roven velikosti souboru
      * pro ziskani csv 10-ti nejnavstevovanejsich produktu lze napr. pouzit nasledujici bash prikaz
      * ls -lS | tail -n +2 | head -n 10 | awk '{print $9,$5}' | sed -e 's/\s\+/,/g'
+     * mozna, ze by pro pripsani jen stacilo "echo '+' >> $filename" 
      * @param string $key
      * @throws Exception unable to open file
      */
